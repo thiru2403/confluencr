@@ -7,7 +7,7 @@ export class DbService implements OnModuleInit, OnModuleDestroy {
   private readonly log = new Logger(DbService.name);
 
   readonly pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: 'postgresql://postgres:Thiru@240300@db.orwnxwioypdnrqlflkll.supabase.co:5432/postgres',
     ssl: process.env.DATABASE_SSL === 'false' ? false : { rejectUnauthorized: false },
     max: 10,
   });
