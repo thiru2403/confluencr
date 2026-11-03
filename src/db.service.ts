@@ -1,5 +1,6 @@
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Pool } from 'pg';
+import 'dotenv/config';
 
 @Injectable()
 export class DbService implements OnModuleInit, OnModuleDestroy {
@@ -13,6 +14,7 @@ export class DbService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     if (!process.env.DATABASE_URL) {
+      console.log(process.env.DATABASE_URL)
       throw new Error('DATABASE_URL is not set. Add it in your .env file or in Render > Environment.');
     }
     this.pool.on('error', (e) => this.log.error('Idle DB client error', e));
