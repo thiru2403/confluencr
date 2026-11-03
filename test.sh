@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage: ./test.sh https://your-app.onrender.com   (default http://localhost:3000)
-URL=${1:-http://localhost:3000}
+URL=${1:-https://confluencr.onrender.com}
 ID="txn_$(date +%s)"
 BODY="{\"transaction_id\":\"$ID\",\"source_account\":\"acc_user_789\",\"destination_account\":\"acc_merchant_456\",\"amount\":1500,\"currency\":\"INR\"}"
 
