@@ -1,22 +1,21 @@
+import 'dotenv/config';
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Pool } from 'pg';
-import 'dotenv/config';
 
 @Injectable()
 export class DbService implements OnModuleInit, OnModuleDestroy {
   private readonly log = new Logger(DbService.name);
 
   readonly pool = new Pool({
-    connectionString: 'postgresql://postgres:Thiru@240300@db.orwnxwioypdnrqlflkll.supabase.co:5432/postgres',
+    connectionString: process.env.DATABASE_URL,
     ssl: process.env.DATABASE_SSL === 'false' ? false : { rejectUnauthorized: false },
     max: 10,
   });
 
   async onModuleInit() {
-    // if (!process.env.DATABASE_URL) {
-    //   console.log(process.env.DATABASE_URL)
-    //   throw new Error('DATABASE_URL is not set. Add it in your .env file or in Render > Environment.');
-    // }
+    if (!process.env.DATABASE_URL) {
+      throw new Error('DATABASE_URL is not set. Add it in your .env file or in Render > Environment.');
+    }
     this.pool.on('error', (e) => this.log.error('Idle DB client error', e));
     await this.pool.query(`
       CREATE TABLE IF NOT EXISTS transactions (
